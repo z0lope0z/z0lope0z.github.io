@@ -27,9 +27,29 @@
     <div id="blog-display">
       <h1 id="blog_title">Network debugging inside container.</h1>
       <h2 id="blog_sub_title">What if there's no netcat</h2>
-      <div id="blog"><p id="para_0_original">I was recently debugging statsd metrics (udp packets) to my signalfx agent. After running netcat I encountered this error:
-
-Netcat wasn't there? How am I supposed to get UDP packets?</p><img src="img_0.png" alt="blog image 0" id="img_0_original"></div>
+      <div id="blog">
+        <p id="para_0_original">I was recently debugging statsd metrics (udp packets) to my signalfx agent. After running netcat I encountered this error:
+        Netcat wasn't there? How am I supposed to get UDP packets?
+        </p><img src="img_0.png" alt="blog image 0" id="img_0_original"></div>
+        <p>I was recently debugging statsd metrics (udp packets) to my signalfx agent. After running netcat I encountered this error:&nbsp;<strong>&nbsp;</strong></p>
+        <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-container/img_0.png" alt="" width="221" height="37" /></strong></p>
+        <p>Wow, apparently netcat isn't installed inside signalfx agent container!</p>
+        <p>After going through the signalfx repo, apparently they whitelist the linux commands:</p>
+        <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-container/img_1.png" alt="" width="221" height="340" /></strong></p>
+        <p><a href="https://github.com/signalfx/signalfx-agent/blob/master/Dockerfile#L292">https://github.com/signalfx/signalfx-agent/blob/master/Dockerfile#L292</a></p>
+        <p>&nbsp;</p>
+        <p>They actually add in this tool called ss or "socket statistics". Network connections in linux are represented as these files called sockets. So we can use the socket statistics command to show incoming/outgoing udp packet statistics as well as peak into the ports that are open. Nice.</p>
+        <p>After diving into the code here:</p>
+        <p><a href="https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tree/misc/ss.c#n493">https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tree/misc/ss.c#n493</a></p>
+        <p>&nbsp;</p>
+        <p>It turns out that socket statistics just reads from the same proc directory that netcat uses. Cool.</p>
+        <p>Lesson learned:</p>
+        <p>1. Try netcat</p>
+        <p>2. Try ss</p>
+        <p>3. Just have a look at /proc/net/udp</p>
+        <p>&nbsp;</p>
+        <p>~Sherlope</p>
+        <p>&nbsp;</p>
     </div>
     <div id="footer_blog">
       <a href="https://github.com/imfunniee" target="_blank">made on earth by a human</a>
