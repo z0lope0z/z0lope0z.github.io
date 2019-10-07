@@ -1,8 +1,8 @@
 [
  {
-  "url_title": "Network-debugging-inside-container",
-  "title": "Network debugging inside container.",
-  "sub_title": "What if there's no netcat",
+  "url_title": "Network-debugging-inside-containers",
+  "title": "Network debugging inside containers.",
+  "sub_title": "Plot twist: command netcat not found",
   "top_image": "top_image.png",
   "visible": true
  }
