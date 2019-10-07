@@ -29,25 +29,26 @@
       <h2 id="blog_sub_title">Check open ports inside a container! (plot twist: netcat not found)</h2>
       <div id="blog">
         <p>I was recently debugging statsd metrics (udp packets) inside my signalfx agent. I just needed to check if a port inside the signalfx container was open to receive UDP packets.</p>
-        <p>Easy enough but after running netcat I encountered this error:&nbsp;<strong>&nbsp;</strong></p>
+        <p>Easy enough but after running netcat I encountered this error:&nbsp;</p>
         <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-container/img_0.png" alt="" width="221" height="37" /></strong></p>
         <p>Wow, apparently netcat isn't installed inside signalfx agent container!</p>
         <p>After going through the signalfx repo, apparently they whitelist the linux commands:</p>
         <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-container/img_1.png" alt="" width="221" height="340" /></strong></p>
         <p><a href="https://github.com/signalfx/signalfx-agent/blob/master/Dockerfile#L292">https://github.com/signalfx/signalfx-agent/blob/master/Dockerfile#L292</a></p>
-        <p>&nbsp;</p>
-        <p>They actually add in this tool called ss or "socket statistics". Network connections in linux are represented as these files called sockets. So we can use the socket statistics command to show incoming/outgoing udp packet statistics as well as peak into the ports that are open. Nice.</p>
-        <p>After diving into the code here:</p>
+        <p>They actually add in this tool called ss or "socket statistics".</p>
+        <p>So what's "ss"?</p>
+        <p>Network connections in linux are represented as these files called sockets. We can use the socket statistics command to show incoming/outgoing udp packet statistics as well as peak into the ports that are open. Nice.&nbsp;</p>
+        <p>Apparently, "ss" is a newer and faster way to retrieve network statistics. You can read more about it <a href="https://www.linux.com/tutorials/introduction-ss-command/">here</a></p>
+        <p>After diving further into the code here:</p>
         <p><a href="https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tree/misc/ss.c#n493">https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tree/misc/ss.c#n493</a></p>
-        <p>&nbsp;</p>
         <p>It turns out that socket statistics just reads from the same proc directory that netcat uses. Cool.</p>
         <p>Lesson learned:</p>
-        <p>1. Try netcat</p>
-        <p>2. Try ss</p>
-        <p>3. Just have a look at /proc/net/udp</p>
-        <p>&nbsp;</p>
+        <ol>
+        <li>Try netcat</li>
+        <li>Try ss</li>
+        <li>Just have a look at /proc/net/udp</li>
+        </ol>
         <p>~Sherlope</p>
-        <p>&nbsp;</p>
     </div>
     <div id="footer_blog">
       <a href="https://github.com/imfunniee" target="_blank">made on earth by a human</a>
