@@ -5,5 +5,12 @@
   "sub_title": "test",
   "top_image": "top_image.png",
   "visible": true
+ },
+ {
+  "url_title": "Network-debugging-inside-container",
+  "title": "Network debugging inside container.",
+  "sub_title": "What if there's no netcat",
+  "top_image": "top_image.png",
+  "visible": true
  }
 ]
