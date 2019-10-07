@@ -26,12 +26,10 @@
     </table>
     <div id="blog-display">
       <h1 id="blog_title">Network debugging inside container.</h1>
-      <h2 id="blog_sub_title">What if there's no netcat</h2>
+      <h2 id="blog_sub_title">Check open ports inside a container! (plot twist: netcat not found)</h2>
       <div id="blog">
-        <p id="para_0_original">I was recently debugging statsd metrics (udp packets) to my signalfx agent. After running netcat I encountered this error:
-        Netcat wasn't there? How am I supposed to get UDP packets?
-        </p><img src="img_0.png" alt="blog image 0" id="img_0_original"></div>
-        <p>I was recently debugging statsd metrics (udp packets) to my signalfx agent. After running netcat I encountered this error:&nbsp;<strong>&nbsp;</strong></p>
+        <p>I was recently debugging statsd metrics (udp packets) inside my signalfx agent. I just needed to check if a port inside the signalfx container was open to receive UDP packets.</p>
+        <p>Easy enough but after running netcat I encountered this error:&nbsp;<strong>&nbsp;</strong></p>
         <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-container/img_0.png" alt="" width="221" height="37" /></strong></p>
         <p>Wow, apparently netcat isn't installed inside signalfx agent container!</p>
         <p>After going through the signalfx repo, apparently they whitelist the linux commands:</p>
