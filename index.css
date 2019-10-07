@@ -167,6 +167,8 @@ body {
   line-height: 25px;
   word-spacing: 1.2px;
   margin: 5vh 0px;
+  margin-block-start: 5px;
+  margin-block-end: 0;
 }
 
 #blog p span {
