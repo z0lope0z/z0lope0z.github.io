@@ -25,37 +25,37 @@
       </tbody>
     </table>
     <div id="blog-display">
-      <h1 id="blog_title">Network debugging inside container.</h1>
-      <h2 id="blog_sub_title">Check open ports inside a container! (plot twist: netcat not found)</h2>
+      <h1 id="blog_title">Network debugging inside containers.</h1>
+      <h2 id="blog_sub_title">Plot twist: netcat not found!</h2>
       <div id="blog">
         <p>I was recently debugging statsd metrics (udp packets) inside my signalfx agent. I just needed to check if a port inside the signalfx container was open to receive UDP packets.</p>
-        <p>Easy enough but after running netcat I encountered this error:&nbsp;</p>
+        <p>Easy enough, but after running netcat I encountered this error:&nbsp;</p>
         <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-container/img_0.png" alt="" width="" height="37" /></strong></p>
         <p>Wow, apparently netcat isn't installed inside signalfx agent container!</p>
-        <p>After going through the signalfx repo, apparently they whitelist the linux commands:</p>
+        <p>After going through the signalfx repo, apparently they whitelist a series of linux commands, and netcat is not included:</p>
         <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-container/img_1.png" alt="" width="" height="340" /></strong></p>
         <p><a href="https://github.com/signalfx/signalfx-agent/blob/master/Dockerfile#L292">https://github.com/signalfx/signalfx-agent/blob/master/Dockerfile#L292</a></p>
-        <p>They actually add in this tool called ss or "socket statistics".</p>
+        <p>But, after digging around - they actually add in this tool called ss or "socket statistics" or "ss".</p>
         <p>&nbsp;</p>
         <h3><i><b>What's "sockets statistics"?</b></i></h3>
-        <p>Network connections in linux are represented as these files called sockets. We can use the socket statistics command to show incoming/outgoing udp packet statistics as well as peak into the ports that are open. Nice.&nbsp;</p>
+        <p>Network connections in linux are represented as files called sockets. We can use the socket statistics command to show incoming/outgoing udp packet statistics as well as peak into the ports that are open. Nice.&nbsp;</p>
         <p>&nbsp;</p>
-        <p>Apparently, "ss" is a newer and faster way to retrieve network statistics. You can read more about it <a href="https://www.linux.com/tutorials/introduction-ss-command/">here</a></p>
+        <p>Apparently, "ss" is a newer and faster way to retrieve network statistics. You can read more about it <a href="https://www.linux.com/tutorials/introduction-ss-command/">here</a>. I feel like a dinosaur.</p>
         <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-container/img_3.png" alt="" width="" height="530" /></strong></p>
         <p>&nbsp;</p>
         <p>After diving further into the code here:</p>
         <p><a href="https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tree/misc/ss.c#n493">https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tree/misc/ss.c#n493</a></p>
         <p>It turns out that socket statistics just reads from the same proc directory that netcat uses. Cool.</p>
-        <p>Lesson learned:</p>
-        <ol>
+        <p>Lesson learned, if you're in a container environment and you're trying to look for open ports:</p>
+        <ul>
         <li>Try netcat</li>
-        <li>Try ss</li>
-        <li>Just have a look at /proc/net/udp</li>
-        </ol>
-        <p>~Sherlope</p>
+        <li>Try lsof -i</li>
+        <li>Try ss -l</li>
+        <li>Give up and just have a look at the proc files /proc/net/udp xD</li>
+        </ul>
     </div>
     <div id="footer_blog">
-      <a href="https://github.com/imfunniee" target="_blank">made on earth by a human</a>
+      <a href="https://github.com/z0lope0z" target="_blank">~Sherlope</a>
     </div>
     <script type="text/javascript">
       setTimeout(function() {
