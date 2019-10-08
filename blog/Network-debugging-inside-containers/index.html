@@ -30,10 +30,10 @@
       <div id="blog">
         <p>I was recently debugging statsd metrics (udp packets) inside my signalfx agent. I just needed to check if a port inside the signalfx container was open to receive UDP packets.</p>
         <p>Easy enough, but after running netcat I encountered this error:&nbsp;</p>
-        <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-container/img_0.png" alt="" width="" height="37" /></strong></p>
+        <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-containers/img_0.png" alt="" width="" height="37" /></strong></p>
         <p>Wow, apparently netcat isn't installed inside signalfx agent container!</p>
         <p>After going through the signalfx repo, apparently they whitelist a series of linux commands, and netcat is not included:</p>
-        <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-container/img_1.png" alt="" width="" height="340" /></strong></p>
+        <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-containers/img_1.png" alt="" width="" height="340" /></strong></p>
         <p><a href="https://github.com/signalfx/signalfx-agent/blob/master/Dockerfile#L292">https://github.com/signalfx/signalfx-agent/blob/master/Dockerfile#L292</a></p>
         <p>But, after digging around - they actually add in this tool called ss or "socket statistics" or "ss".</p>
         <p>&nbsp;</p>
@@ -41,7 +41,7 @@
         <p>Network connections in linux are represented as files called sockets. We can use the socket statistics command to show incoming/outgoing udp packet statistics as well as peak into the ports that are open. Nice.&nbsp;</p>
         <p>&nbsp;</p>
         <p>Apparently, "ss" is a newer and faster way to retrieve network statistics. You can read more about it <a href="https://www.linux.com/tutorials/introduction-ss-command/">here</a>. I feel like a dinosaur.</p>
-        <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-container/img_3.png" alt="" width="" height="530" /></strong></p>
+        <p><strong><img src="https://z0lope0z.github.io/blog/Network-debugging-inside-containers/img_3.png" alt="" width="" height="530" /></strong></p>
         <p>&nbsp;</p>
         <p>After diving further into the code here:</p>
         <p><a href="https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tree/misc/ss.c#n493">https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tree/misc/ss.c#n493</a></p>
