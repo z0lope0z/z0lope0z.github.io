@@ -5,5 +5,12 @@
   "sub_title": "Plot twist: command netcat not found",
   "top_image": "top_image.png",
   "visible": true
+ },
+ {
+  "url_title": "What-makes-HAProxy-Highly-Available",
+  "title": "What makes HAProxy Highly Available?",
+  "sub_title": "Plot twist: HA isn't built in to HAProxy",
+  "top_image": "top_image.png",
+  "visible": true
  }
 ]
