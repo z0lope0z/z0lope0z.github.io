@@ -27,14 +27,18 @@
     <div id="blog-display">
       <h1 id="blog_title">Monitoring s3 objects with AWS Lambda</h1>
       <h2 id="blog_sub_title">ah lambda, my best friend!</h2>
-      <div id="blog"><p id="para_0_original">A data pipeline was writing logs in s3. I needed to monitor these files. The target metric's value is derived from the file's metadata.
-
+      <div id="blog"><p id="para_0_original">A data pipeline was writing logs in s3. I needed to monitor these files. The target metric's value is derived from the file's metadata.</p>
+<p>
+<br />
 Luckily there's an existing <a href="https://www.datadoghq.com/monitor-cloudwatch/">cloudwatch to datadog integration</a>. I just needed to publish the metric in cloudwatch and datadog automatically picks it up.
-
-Architecture
-1. There are two triggers for this lambda function, (1) scheduled and (2) s3 event based
-2. Whenever there is a trigger, the lambda function queries the s3 bucket with a business logic that converts s3 meta data to a metric
-3. The metric is emitted to cloudwatch</p><img src="img_0.png" alt="blog image 0" id="img_0_original"></div>
+</p>
+<p>
+<img src="img_0.png" alt="blog image 0" width="600" id="img_0_original"> <br />
+<h2>Architecture</h2> <br />
+1. There are two triggers for this lambda function, (1) scheduled and (2) s3 event based <br />
+2. Whenever there is a trigger, the lambda function queries the s3 bucket with a business logic that converts s3 meta data to a metric <br />
+3. The metric is emitted to cloudwatch</p></div>
+</p>
     </div>
     <div id="footer_blog">
       <a href="https://github.com/imfunniee" target="_blank">made on earth by a human</a>
