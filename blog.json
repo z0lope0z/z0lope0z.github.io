@@ -12,5 +12,12 @@
   "sub_title": "Plot twist: HA isn't built in to HAProxy",
   "top_image": "top_image.png",
   "visible": true
+ },
+ {
+  "url_title": "Monitoring-s-objects-with-AWS-Lambda",
+  "title": "Monitoring s3 objects with AWS Lambda",
+  "sub_title": "ah lambda, my best friend!",
+  "top_image": "top_image.png",
+  "visible": true
  }
 ]
